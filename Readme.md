@@ -19,3 +19,7 @@ It will also add the following to your .bashrc
 ```
 export PATH=$HOME/bin:$PATH
 ```
+
+## To add new helpfiles
+
+Help files are JSON files.  Copy one of the existing ones and add your own commands to it.  All helpfiles can be found in the directory ```$HOME/.config/howto/helpfiles```.
