@@ -2,5 +2,47 @@
 
 import os
 import sys
+import argparse
+import json
+import pathlib
 
+appDirectory = pathlib.Path(__file__).parent.absolute()
+appConfigDir = os.path.join(os.getenv("HOME"), ".config", "howto")
+version = 0.1
+
+if not os.path.isdir(appConfigDir):
+    print("Could not find .config/howto directory.")
+    sys.exit(1);
+
+def init_argparse() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [OPTION] [REGEX]",
+        description="Find common recipes for command line tools"
+    )
+    parser.add_argument(
+        "-v", "--version", action="version", version="{} version {}".format(parser.prog, version)
+    )
+    parser.add_argument('regex', nargs = '*')
+    return parser
+
+def find_help_for(regex: str):
+    print("test regex {}".format(regex))
+
+def process_stdin():
+    for line in sys.stdin:
+        find_help_for(line)
+
+def main() -> None:
+    parser = init_argparse()
+    args = parser.parse_args()
+    if not args.regex:
+        process_stdin()
+    for regex in args.regex:
+        if regex == "-":
+            process_stdin()
+        else:
+            find_help_for(regex)
+
+if __name__ == "__main__":
+    main()
 
