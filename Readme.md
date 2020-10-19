@@ -3,7 +3,7 @@
 A simple script to display common uses of a command when you cannot quite remember 
 that special incantation.
 
-[howto example](img/howto1.png "HowTo Example")
+![howto example](img/howto1.png "HowTo Example")
 
 ## Installation
 
