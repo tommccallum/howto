@@ -1,0 +1,3 @@
+docker 
+ssh new key
+git status

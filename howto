@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 
+"""
+A script to show helpful commands when required
+"""
+
+# here we import all the libraries we need
 import os
 import sys
 import argparse
@@ -9,16 +14,24 @@ import glob
 import re
 import colorama
 
+# some global variables we might need
 appDirectory = pathlib.Path(__file__).parent.absolute()
 appConfigDir = os.path.join(os.getenv("HOME"), ".config", "howto")
 version = 0.1
+
+# this is required for colorama library
 colorama.init()
 
+# if we cannot find out config directory then we have not been installed :(
 if not os.path.isdir(appConfigDir):
     print("Could not find .config/howto directory.")
     sys.exit(1);
 
+
 def init_argparse() -> argparse.ArgumentParser:
+    """
+    Setup what arguments we take, this is using the argparse library
+    """
     parser = argparse.ArgumentParser(
         usage="%(prog)s [OPTION] [REGEX]",
         description="Find common recipes for command line tools"
@@ -31,6 +44,9 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 def read_helpfiles():
+    """
+    Read all the help files in to a list
+    """
     data = []
     helpfileDir = os.path.join(appConfigDir, "helpfiles")
     if not os.path.isdir(helpfileDir):
@@ -43,6 +59,9 @@ def read_helpfiles():
     return data
 
 def print_commands():
+    """
+    Print the tools and services we have help files for.
+    """
     data = read_helpfiles()
     for item in data:
         s = "{}".format(item["name"])
@@ -53,6 +72,10 @@ def print_commands():
         print(s)
 
 def find_help_for(regex: str, data: list = []):
+    """
+    Match a regular expression against the item
+    Returns a list of matched items.
+    """
     if len(data) == 0:
         data = read_helpfiles()
     if len(regex.strip()) == 0:
@@ -80,12 +103,23 @@ def find_help_for(regex: str, data: list = []):
     return new_data
 
 def process_stdin():
-    data = []
+    """
+    When reading from standard in then we match per line
+    """
     for line in sys.stdin:
-        data += find_help_for(line)
-    return data
+        line = line.strip()
+        if len(line) > 0:
+            words = line.split(" ")
+            print(colorama.Fore.WHITE+"Filter: {}".format(line))
+            data = []
+            for w in words:
+                data = find_help_for(w, data)
+            print_info(data)
 
 def print_info(data):
+    """
+    Print out each matching entry in a nice colourful way
+    """
     if len(data) == 0:
         print(colorama.Fore.RED+"No matching entries found.")
     else:
@@ -93,21 +127,29 @@ def print_info(data):
             print(colorama.Fore.YELLOW+"{:40}".format(item["command"])+colorama.Fore.GREEN+"# {}".format(item["description"]))
 
 def main() -> None:
+    """
+    This is the first function we enter and sets everything up
+    """
     parser = init_argparse()
     args = parser.parse_args()
     if args.list:
         print_commands()
         sys.exit(0)
     if not args.regex:
-        data = process_stdin()
+        process_stdin()
+        sys.exit(0)
     data = []
     for regex in args.regex:
         if regex == "-":
-            data = process_stdin()
+            process_stdin()
         else:
             data = find_help_for(regex, data)
     print_info(data)
 
 if __name__ == "__main__":
+    """
+    This is called when this file is called directly from the command line.
+    If this was used in another Python file via from/import then this would not be called.
+    """
     main()
 
