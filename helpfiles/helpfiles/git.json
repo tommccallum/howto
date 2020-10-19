@@ -1,0 +1,14 @@
+{
+    "name": "git",
+    "synonyms": "github",
+    "commands":[
+        {
+            "command": "git status",
+            "description": "Get status for repository"
+        },
+        {
+            "command": "git config --config user.name",
+            "description": "Set username for commits from this machine"
+        }
+    ]
+}
