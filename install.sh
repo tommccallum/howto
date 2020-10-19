@@ -9,3 +9,5 @@ cp -R ./helpfiles $HOME/.config/howto/helpfiles
 cp config-default.json $HOME/.config/howto/config.json
 cp howto $HOME/bin
 chmod +x $HOME/bin/howto
+echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
+export PATH=$HOME/bin:$PATH
