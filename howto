@@ -69,7 +69,7 @@ def find_help_for(regex: str, data: list = []):
         matched = []
         for item in data:
             if "description" in item:
-                if reg.match(item["description"]):
+                if reg.search(item["description"]):
                     matched += [ item ]
         return matched
     return new_data

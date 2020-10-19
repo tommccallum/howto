@@ -10,7 +10,8 @@
             "request": "launch",
             "program": "${file}",
             "args": [
-                "docker"
+                "git",
+                "username"
             ],
             "console": "integratedTerminal"
         }
