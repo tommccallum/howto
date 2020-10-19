@@ -7,7 +7,7 @@
             "description": "Get status for repository"
         },
         {
-            "command": "git config --config user.name",
+            "command": "git config --global user.name=<your_username>",
             "description": "Set username for commits from this machine"
         },
         {
