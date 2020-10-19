@@ -13,7 +13,8 @@ be put into $HOME/.config/howto.  This is so that you don't need root permission
 ```
 pip3 install --user colorama
 git clone https://www.tom-mccallum.com/howto
-install.sh
+cd howto
+./install.sh
 ```
 
 It will also add the following to your .bashrc
