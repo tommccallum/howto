@@ -87,6 +87,8 @@ def find_help_for(regex: str, data: list = []):
     modified = False
     for item in data:
         if "name" in item:
+            if not type(item["synonyms"]) == list:
+                item["synonyms"] = [ item["synonyms"] ]
             if reg.match(item["name"]) or \
                 len([ x for x in item["synonyms"] if reg.match(x) ]) > 0 :
                 new_data += item["commands"]
