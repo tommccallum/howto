@@ -3,6 +3,8 @@
 A simple script to display common uses of a command when you cannot quite remember 
 that special incantation.
 
+[howto example](img/howto1.png "HowTo Example")
+
 ## Installation
 
 This will install a script howto into a directory $HOME/bin directory and the helpfiles and config file will
