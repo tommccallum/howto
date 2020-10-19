@@ -1,0 +1,22 @@
+{
+    "name": "npm",
+    "synonyms": "node",
+    "commands":[
+        {
+            "command": "npm install",
+            "description": "Install all project files"
+        },
+        {
+            "command": "npm run serve",
+            "description": "Run local server and do hot-loading for development"
+        },
+        {
+            "command": "npm run test:unit",
+            "description": "Run unit tests"
+        },
+        {
+            "command": "npm run lint",
+            "description": "Lints and fixes files"
+        }
+    ]
+}
