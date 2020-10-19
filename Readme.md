@@ -31,7 +31,7 @@ Here is an example from docker.json.
 ```
 {
     "name": "docker",
-    "synonyms": "dock",
+    "synonyms": [ "dock", "container" ],
     "commands":[
         {
             "command": "docker images -a",

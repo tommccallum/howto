@@ -1,6 +1,6 @@
 {
     "name": "docker",
-    "synonyms": "dock",
+    "synonyms": [ "dock", "container" ],
     "commands":[
         {
             "command": "docker images -a",
