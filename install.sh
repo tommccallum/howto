@@ -9,5 +9,9 @@ cp -R ./helpfiles $HOME/.config/howto
 cp config-default.json $HOME/.config/howto/config.json
 cp howto $HOME/bin
 chmod +x $HOME/bin/howto
-echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
+IS_IN_PATH=$( echo "$PATH" | grep "$HOME/bin" )
+if [ "x$IS_IN_PATH" == "x" ]
+then
+    echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
+fi
 export PATH=$HOME/bin:$PATH
