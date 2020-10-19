@@ -17,6 +17,10 @@
         {
             "command": "ssh -T git@github.org",
             "description": "Check your SSH connection to Github"
+        },
+        {
+            "command": "git push --set-upstream origin master",
+            "description": "First push when creating your github repo locally"
         }
     ]
 }
