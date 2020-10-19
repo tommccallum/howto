@@ -9,6 +9,7 @@ This will install a script howto into a directory $HOME/bin directory and the he
 be put into $HOME/.config/howto.  This is so that you don't need root permissions.
 
 ```
+pip3 install --user colorama
 git clone https://www.tom-mccallum.com/howto
 install.sh
 ```

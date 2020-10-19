@@ -5,10 +5,14 @@ import sys
 import argparse
 import json
 import pathlib
+import glob
+import re
+import colorama
 
 appDirectory = pathlib.Path(__file__).parent.absolute()
 appConfigDir = os.path.join(os.getenv("HOME"), ".config", "howto")
 version = 0.1
+colorama.init()
 
 if not os.path.isdir(appConfigDir):
     print("Could not find .config/howto directory.")
@@ -19,29 +23,85 @@ def init_argparse() -> argparse.ArgumentParser:
         usage="%(prog)s [OPTION] [REGEX]",
         description="Find common recipes for command line tools"
     )
+    parser.add_argument( "-l", "--list", action="store_true")
     parser.add_argument(
         "-v", "--version", action="version", version="{} version {}".format(parser.prog, version)
     )
     parser.add_argument('regex', nargs = '*')
     return parser
 
-def find_help_for(regex: str):
-    print("test regex {}".format(regex))
+def read_helpfiles():
+    data = []
+    helpfileDir = os.path.join(appConfigDir, "helpfiles")
+    if not os.path.isdir(helpfileDir):
+        os.makedirs(helpfileDir)
+    files = glob.glob(os.path.join(helpfileDir,"*.json"), recursive=True)
+    for cf in files:
+        with open(cf,"r") as in_file:
+            new_data = json.load(in_file)
+            data.append(new_data)
+    return data
+
+def print_commands():
+    data = read_helpfiles()
+    for item in data:
+        print("{}".format(item["name"]))
+
+def find_help_for(regex: str, data: list = []):
+    if len(data) == 0:
+        data = read_helpfiles()
+    if len(regex.strip()) == 0:
+        return []
+    reg = re.compile(regex, flags=re.IGNORECASE)
+
+    # this will match any service level command
+    new_data = []
+    modified = False
+    for item in data:
+        if "name" in item:
+            if reg.match(item["name"]) or \
+                len([ x for x in item["synonyms"] if reg.match(x) ]) > 0 :
+                new_data += item["commands"]
+                modified = True
+
+    if not modified:
+        # then we need to match the description
+        matched = []
+        for item in data:
+            if "description" in item:
+                if reg.match(item["description"]):
+                    matched += [ item ]
+        return matched
+    return new_data
 
 def process_stdin():
+    data = []
     for line in sys.stdin:
-        find_help_for(line)
+        data += find_help_for(line)
+    return data
+
+def print_info(data):
+    if len(data) == 0:
+        print(colorama.Fore.RED+"No matching entries found.")
+    else:
+        for item in data:
+            print(colorama.Fore.YELLOW+"{:40}".format(item["command"])+colorama.Fore.GREEN+"# {}".format(item["description"]))
 
 def main() -> None:
     parser = init_argparse()
     args = parser.parse_args()
+    if args.list:
+        print_commands()
+        sys.exit(0)
     if not args.regex:
-        process_stdin()
+        data = process_stdin()
+    data = []
     for regex in args.regex:
         if regex == "-":
-            process_stdin()
+            data = process_stdin()
         else:
-            find_help_for(regex)
+            data = find_help_for(regex, data)
+    print_info(data)
 
 if __name__ == "__main__":
     main()

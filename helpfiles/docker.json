@@ -1,10 +1,14 @@
-[
-    {
-        "command": "docker images -a",
-        "description": "List all images"
-    },
-    {
-        "command": "docker system prune -a",
-        "description": "Remove any stopped containers, all unused images"
-    }
-]
+{
+    "name": "docker",
+    "synonyms": "dock",
+    "commands":[
+        {
+            "command": "docker images -a",
+            "description": "List all images"
+        },
+        {
+            "command": "docker system prune -a",
+            "description": "Remove any stopped containers, all unused images"
+        }
+    ]
+}
