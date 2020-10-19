@@ -9,6 +9,14 @@
         {
             "command": "git config --config user.name",
             "description": "Set username for commits from this machine"
+        },
+        {
+            "command": "ssh -T git@bitbucket.org",
+            "description": "Check your SSH connection to Bitbucket"
+        },
+        {
+            "command": "ssh -T git@github.org",
+            "description": "Check your SSH connection to Github"
         }
     ]
 }

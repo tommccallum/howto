@@ -1,0 +1,22 @@
+{
+    "name": "ssh",
+    "synonyms": "shell",
+    "commands":[
+        {
+            "command": "eval $(ssh-agent -s)",
+            "description": "Create a new ssh-agent process"
+        },
+        {
+            "command": "ssh-add -l",
+            "description": "list current keys"
+        },
+        {
+            "command": "ssh-add ~/.ssh/<key>",
+            "description": "add key to keychain"
+        },
+        {
+            "command": "ssh-keygen -t rsa -b 4096 -C 'your_email@example.com'",
+            "description": "Generate a new SSH key"
+        }
+    ]
+}
