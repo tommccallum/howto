@@ -45,7 +45,12 @@ def read_helpfiles():
 def print_commands():
     data = read_helpfiles()
     for item in data:
-        print("{}".format(item["name"]))
+        s = "{}".format(item["name"])
+        if not type(item["synonyms"]) == list:
+            item["synonyms"] = [ item["synonyms"] ]
+        for synonym in item["synonyms"]:
+            s += " / {}".format(synonym)
+        print(s)
 
 def find_help_for(regex: str, data: list = []):
     if len(data) == 0:

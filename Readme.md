@@ -23,6 +23,21 @@ It will also add the following to your .bashrc
 export PATH=$HOME/bin:$PATH
 ```
 
+## Usage
+
+```
+howto docker username
+howto ssh new key
+```
+
+The program is ```howto```, the first argument matches the tool (name and synonym fields in the helpfile) and the following words are used to narrow the search by searching the description.
+
+To show all tools available:
+
+```
+howto --list
+```
+
 ## To add new helpfiles
 
 Help files are JSON files.  Copy one of the existing ones and add your own commands to it.  All helpfiles can be found in the directory ```$HOME/.config/howto/helpfiles```.
